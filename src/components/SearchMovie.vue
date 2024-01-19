@@ -1,7 +1,25 @@
 <template>
-  <div id="searchbar">
-    <input type="text" v-model="search" />
-  </div>
+  <q-input
+    outlined
+    bottom-slots
+    v-model="text"
+    label="Movie Name"
+    counter
+    maxlength="32"
+    :dense="dense"
+  >
+    <template v-slot:append>
+      <q-icon
+        v-if="text !== ''"
+        name="close"
+        @click="text = ''"
+        class="cursor-pointer"
+      />
+      <q-icon name="search" />
+    </template>
+
+    <template v-slot:hint> Field hint </template>
+  </q-input>
 </template>
 <script>
 import { ref } from 'vue'
@@ -23,8 +41,8 @@ export default defineComponent({
             query: query,
             page: page,
             year: year,
-            include_adult: true,
-          },
+            include_adult: true
+          }
         })
         .then((response) => {
           data.value = response.data
@@ -33,6 +51,6 @@ export default defineComponent({
     }
 
     return { data, loadData }
-  },
+  }
 })
 </script>
