@@ -1,17 +1,18 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
-    >
+  <q-page class="window-height window-width column justify-top items-center">
+    <SearchMovie class="q-ma-md" />
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import SearchMovie from 'src/components/SearchMovie.vue'
 
 export default defineComponent({
-  name: 'IndexPage'
+  name: 'IndexPage',
+
+  components: {
+    SearchMovie
+  }
 })
 </script>
