@@ -30,7 +30,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'SearchBar',
 
-  setup(query, page, year = 0) {
+  setup(query, page) {
     const $q = useQuasar()
     const data = ref(null)
 
@@ -40,7 +40,7 @@ export default defineComponent({
           params: {
             query: query,
             page: page,
-            year: year,
+            year: 0,
             include_adult: true
           }
         })
