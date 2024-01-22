@@ -1,13 +1,5 @@
 <template>
-  <q-input
-    outlined
-    bottom-slots
-    v-model="text"
-    label="Movie Name"
-    counter
-    maxlength="32"
-    :dense="dense"
-  >
+  <q-input outlined bottom-slots v-model="text" counter maxlength="32">
     <template v-slot:append>
       <q-icon
         v-if="text !== ''"
@@ -18,11 +10,11 @@
       <q-icon name="search" />
     </template>
 
-    <template v-slot:hint> Field hint </template>
+    <template v-slot:hint>Movie Name </template>
   </q-input>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { movieApi } from 'boot/axios'
 import { useQuasar } from 'quasar'
 import { defineComponent } from 'vue'
@@ -30,7 +22,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'SearchBar',
 
-  setup(query, page) {
+  setup() {
     const $q = useQuasar()
     const data = ref(null)
 
@@ -38,17 +30,30 @@ export default defineComponent({
       movieApi
         .get('/search/movie', {
           params: {
-            query: query,
-            page: page,
+            query: 'God',
+            page: 1,
             year: 0,
             include_adult: true
           }
         })
         .then((response) => {
           data.value = response.data
+          $q.notify('fdjksş')
         })
-        .catch(() => {})
+        .catch(() => {
+          $q.notify({
+            color: 'positive',
+            position: 'top',
+            message: 'Loading failed',
+            icon: 'report_problem'
+          })
+        })
     }
+
+    // Load data when component is mounted
+    onMounted(() => {
+      loadData()
+    })
 
     return { data, loadData }
   }
